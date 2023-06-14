@@ -1,24 +1,25 @@
 const request = require('request');
+const fs = require('fs');
 
 const args = process.argv.slice(2);
 const url = args[0];
 const breed = args[1];
 
 request(url, (error, response, body) => {
-  if (error) {
+  if(error) {
     console.log('Error', error);
-  }
+  };
   
   const data = JSON.parse(body);
 
   for (let i = 0; i < data.length; i++) {
-    if (breed === data[i].name) {
-      console.log(data[i].description);
+    if(breed === data[i].name) {
+    console.log(data[i].description);
+    break;
     }
 
-    if (breed !== data[i].name) {
+    if(i === data.length - 1 && breed !== data[i].name) {
       console.log('Sorry, we have never heard of the ' + breed + ' breed...');
-      return;
     }
-  }
+  }; 
 });
